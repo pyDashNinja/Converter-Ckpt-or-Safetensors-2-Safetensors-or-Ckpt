@@ -1,17 +1,12 @@
-# import PySimpleGUI as sg
 import os
 import torch 
 from threading import Thread
 from datetime import datetime as dt
 from safetensors.torch import save_file
 from safetensors.torch import load_file
-# from util.ui_flattener import flatten_ui_elements
 from util.file_hash import get_file_hash
-# import util.progress_bar_custom as cpbar
-# import util.file_explorer_component as file_explorer
-# import util.colors as color
-# import util.support as support
-from CONSTANT import *
+from constant import *
+import argparse
 
 
 format_file={
@@ -24,49 +19,7 @@ def process_file(file_path,type_format,suffix):
     if type_format == SAFETENSORS_STR:
         convert_to_st(file_path,suffix)
     if type_format == 'CKPT_STR':
-        print("here")
         convert_to_ckpt(file_path,suffix)
-
-    # cpbar.progress_bar_custom(0,1,start_time,window,PBAR_KEY,"file")
-
-    # file_explorer_lstbox_key_elem.update(file_explorer.get_system_files(file_explorer.CurrentDirectory.path, sort="ASC"))
-    # folder_browse_inp_elem.update(file_explorer.CurrentDirectory.path)
-    # convert_button_enable()
-
-    # file_explorer.SelectedFileSystem.path = None
-
-# def process_directory(path,idx,type_format,suffix):
-    # if type_format == CKPT_STR:
-    #     _file_extensions = PYTORCH_FILE_EXTENSIONS
-    # if type_format == SAFETENSORS_STR:
-    #     _file_extensions = SAFETENSORS_FILE_EXTENSIONS
-
-    # for base_path, _, file_names in os.walk(path):
-    #     for file_name in file_names:
-    #         file_ext = os.path.splitext(file_name)[1]
-    #         if (
-    #             file_ext not in _file_extensions
-    #         ):
-    #             continue
-    #         file_path = os.path.join(base_path, file_name)
-    #         input_directory_path_list.append(file_path)
-    #         print(f' {file_name}')
-
-    #     if type_format == CKPT_STR:
-    #         for file_name in input_directory_path_list:
-    #             idx = (idx+1)
-    #             convert_to_st(file_name,suffix)
-    #             cpbar.progress_bar_custom(idx-1,len(input_directory_path_list),start_time,window,PBAR_KEY,"file")
-
-    #     if type_format == SAFETENSORS_STR:
-    #         for file_name in input_directory_path_list:
-    #             idx = (idx+1)
-    #             convert_to_ckpt(file_name,suffix)
-    #             cpbar.progress_bar_custom(idx-1,len(input_directory_path_list),start_time,window,PBAR_KEY,"file")
-        
-    # file_explorer_lstbox_key_elem.update(file_explorer.get_system_files(file_explorer.CurrentDirectory.path, sort="ASC"))
-    # folder_browse_inp_elem.update(file_explorer.CurrentDirectory.path)
-    # convert_button_enable()
 
 def convert_to_st(checkpoint_path,suffix):
     model_hash = get_file_hash(checkpoint_path)
@@ -118,7 +71,13 @@ def load_weights(checkpoint_path):
     except Exception as e:
         pass
 
-process_file(file_path="../uberRealisticPornMerge_urpmv13.safetensors",type_format='CKPT_STR',suffix='ckpt')
-print("jer")
+parser = argparse.ArgumentParser()
+parser.add_argument("file_path", type=str, help="Path to the file '.ckpt' or '.safetensors' : file to be converted")
+parser.add_argument("type_format", type=str, help="type of format of the file for converting into ckpt use 'CKPT_STR'")
+parser.add_argument("suffix", type=str, help="its the suffix of the output file for converting into ckpt use 'ckpt'")
+args = parser.parse_args()
+
+process_file(file_path=args.file_path,type_format=args.type_format,suffix=args.suffix)
+print("Done")
 
 

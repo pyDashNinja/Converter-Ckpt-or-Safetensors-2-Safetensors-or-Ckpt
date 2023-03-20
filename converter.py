@@ -5,7 +5,7 @@ from datetime import datetime as dt
 from safetensors.torch import save_file
 from safetensors.torch import load_file
 from util.file_hash import get_file_hash
-from constant import *
+from constants import *
 import argparse
 
 
@@ -72,9 +72,9 @@ def load_weights(checkpoint_path):
         pass
 
 parser = argparse.ArgumentParser()
-parser.add_argument("file_path", type=str, help="Path to the file '.ckpt' or '.safetensors' : file to be converted")
-parser.add_argument("type_format", type=str, help="type of format, converting into ckpt use 'ckpt' for safetensors use 'safetensors'")
-parser.add_argument("suffix", type=str, help="its the suffix of the output file for converting into ckpt use 'ckpt' or for safetensors use 'safetensors'")
+parser.add_argument("--file_path", type=str, help="Path to the file '.ckpt' or '.safetensors' : file to be converted")
+parser.add_argument("--type_format", type=str, help="type of format, converting into ckpt use 'ckpt' for safetensors use 'safetensors'")
+parser.add_argument("--suffix", type=str, help="its the suffix of the output file for converting into ckpt use 'ckpt' or for safetensors use 'safetensors'")
 args = parser.parse_args()
 
 process_file(file_path=args.file_path,type_format=args.type_format,suffix=args.suffix)

@@ -18,7 +18,7 @@ format_file={
 def process_file(file_path,type_format,suffix):
     if type_format == SAFETENSORS_STR:
         convert_to_st(file_path,suffix)
-    if type_format == 'CKPT_STR':
+    if type_format == CKPT_STR:
         convert_to_ckpt(file_path,suffix)
 
 def convert_to_st(checkpoint_path,suffix):
@@ -73,8 +73,8 @@ def load_weights(checkpoint_path):
 
 parser = argparse.ArgumentParser()
 parser.add_argument("file_path", type=str, help="Path to the file '.ckpt' or '.safetensors' : file to be converted")
-parser.add_argument("type_format", type=str, help="type of format of the file for converting into ckpt use 'CKPT_STR'")
-parser.add_argument("suffix", type=str, help="its the suffix of the output file for converting into ckpt use 'ckpt'")
+parser.add_argument("type_format", type=str, help="type of format, converting into ckpt use 'ckpt' for safetensors use 'safetensors'")
+parser.add_argument("suffix", type=str, help="its the suffix of the output file for converting into ckpt use 'ckpt' or for safetensors use 'safetensors'")
 args = parser.parse_args()
 
 process_file(file_path=args.file_path,type_format=args.type_format,suffix=args.suffix)
